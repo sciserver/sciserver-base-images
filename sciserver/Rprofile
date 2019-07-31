@@ -1,0 +1,6 @@
+# From https://stackoverflow.com/a/11488727/239003
+## Default repo
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://cloud.r-project.org"
+       options(repos=r)
+})
