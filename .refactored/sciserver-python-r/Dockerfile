@@ -47,6 +47,6 @@ RUN curl -L https://cran.rstudio.com/src/base/R-3/R-$R_VERSION.tar.gz -o R.tar.g
 
 RUN cd ~/R/bin \
 	&& ./Rscript -e "install.packages(c('Cairo', 'IRkernel'), repos='https://cloud.r-project.org/')" \
-	&& ./Rscript -e "IRkernel::installspec()"
+	&& ./Rscript -e "IRkernel::installspec(displayname = 'R $R_VERSION')"
 
 RUN /bin/bash -c $'printf "options(bitmapType=\'cairo\')\n" >> ~/.Rprofile'
