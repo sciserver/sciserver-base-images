@@ -4,7 +4,7 @@ USER idies
 
 WORKDIR /home/idies
 
-RUN curl -L https://repo.anaconda.com/miniconda/Miniconda3-4.7.10-Linux-x86_64.sh -o miniconda.sh \
+RUN curl -L https://repo.anaconda.com/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh -o miniconda.sh \
 	&& bash miniconda.sh -b \
 	&& rm -f miniconda.sh
 
