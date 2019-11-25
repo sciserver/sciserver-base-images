@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export SHELL=/bin/bash
 
 jupyter notebook \
