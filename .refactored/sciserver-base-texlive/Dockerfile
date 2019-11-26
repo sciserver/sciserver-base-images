@@ -12,3 +12,7 @@ RUN mkdir /opt/texlive \
 	&& rm -rf /opt/texlive
 
 ENV PATH /usr/local/texlive/bin/x86_64-linux:$PATH
+
+RUN	yum -y install fontconfig fontconfig-devel \
+	&& yum clean all \
+	&& rm -rf /var/cache/yum
