@@ -2,7 +2,7 @@ FROM sciserver-jupyter
 
 # Python (Anaconda)
 
-RUN conda create -y --name py37 python=3.7 anaconda=2019.07 \
+RUN conda create -y --name py37 python=3.7 anaconda=2019.10 \
 	&& conda clean -y --all \
 	&& source activate py37 \
 	&& python -m ipykernel install --user --name py37 --display-name "Python 3.7 (py37)" \
@@ -14,7 +14,9 @@ RUN conda create -y --name py37 python=3.7 anaconda=2019.07 \
 USER root
 
 RUN yum -y install epel-release \
+	&& yum config-manager --set-enabled PowerTools \
 	&& yum -y install \
+		gcc-gfortran \
 		zlib-devel \
 		readline-devel \
 		bzip2-devel \
@@ -34,7 +36,7 @@ RUN yum -y install epel-release \
 
 USER idies
 
-ARG R_VERSION=3.6.1
+ARG R_VERSION=3.6.2
 
 RUN curl -L https://cran.rstudio.com/src/base/R-3/R-$R_VERSION.tar.gz -o R.tar.gz \
 	&& tar -xzf R.tar.gz \

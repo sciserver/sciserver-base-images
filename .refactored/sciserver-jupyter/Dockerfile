@@ -1,5 +1,9 @@
 FROM sciserver-base-texlive
 
+EXPOSE 8888
+
+COPY startup.sh /opt/startup.sh
+
 USER idies
 
 WORKDIR /home/idies
@@ -12,12 +16,6 @@ ENV PATH /home/idies/miniconda3/bin:$PATH
 
 RUN conda update -y conda \
 	&& conda update -y --all \
-	&& conda install -y -c conda-forge jupyter==1.0.0 jupyterlab==1.0.5 \
+	&& conda install -y -c conda-forge jupyter==1.0.0 jupyterlab==1.2.6 \
 	&& conda clean -y --all \
 	&& jupyter kernelspec remove -f python3
-
-COPY entrypoint.sh /etc/entrypoint.sh
-
-ENTRYPOINT /etc/entrypoint.sh
-
-EXPOSE 8888
