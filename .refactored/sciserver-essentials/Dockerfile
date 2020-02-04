@@ -32,6 +32,8 @@ RUN yum -y install epel-release \
 		libXt-devel \
 		texinfo \
 		pandoc \
+		glibc-locale-source \
+		glibc-langpack-en \
 	&& yum clean all \
 	&& rm -rf /var/cache/yum
 
@@ -48,8 +50,48 @@ RUN curl -L https://cran.rstudio.com/src/base/R-3/R-$R_VERSION.tar.gz -o R.tar.g
 	&& cd .. \
 	&& rm -rf R.tar.gz R-$R_VERSION
 
-RUN cd ~/R/bin \
-	&& ./Rscript -e "install.packages(c('Cairo', 'IRkernel'), repos='https://cloud.r-project.org/')" \
-	&& ./Rscript -e "IRkernel::installspec(displayname = 'R $R_VERSION')"
+ENV PATH /home/idies/R/bin:$PATH
 
-RUN /bin/bash -c $'printf "options(bitmapType=\'cairo\')\n" >> ~/.Rprofile'
+RUN Rscript -e "install.packages(c('Cairo', 'IRkernel'), repos='https://cloud.r-project.org/')" \
+	&& Rscript -e "IRkernel::installspec(displayname = 'R $R_VERSION')" \
+	&& /bin/bash -c $'printf "options(bitmapType=\'cairo\')\n" >> ~/.Rprofile'
+
+
+# SciScript Python
+
+RUN conda install -y \
+		argcomplete \
+		chest \
+		configobj \
+		dill \
+		dynd-python \
+		grequests \
+		libdynd \
+		redis \
+		redis-py \
+		sphinx_rtd_theme \
+		traceback2 \
+		unittest2 \
+	&& conda clean -y --all
+
+RUN git clone https://github.com/sciserver/SciScript-Python.git \
+	&& touch /home/idies/keystone.token \
+	&& (cd /home/idies/SciScript-Python \
+	&&     git checkout sciserver-v2.0.13 \
+	&&	   python setup.py install) \
+	&& rm /home/idies/keystone.token
+
+
+# SciScript R
+
+RUN Rscript -e "install.packages(c('bit64', 'jpeg', 'httr', 'jsonlite', 'data.table'), repos='https://cloud.r-project.org/')"
+
+RUN git clone https://github.com/sciserver/SciScript-R.git \
+	&& touch /home/idies/keystone.token && \
+	&& (cd /home/idies/SciScript-R \
+	&&     git checkout sciserver-v2.0.13 \
+	&&     cd .. \
+	&&     R CMD build SciScript-R \
+	&&     R CMD INSTALL SciServer*.tar.gz) \
+	&& rm -rf /home/idies/SciServer*.tar.gz \
+	&& rm /home/idies/keystone.token
