@@ -17,6 +17,7 @@ RUN yum -y install epel-release \
 	&& yum config-manager --set-enabled PowerTools \
 	&& yum -y install \
 		gcc-gfortran \
+		zeromq-devel \
 		zlib-devel \
 		readline-devel \
 		bzip2-devel \
