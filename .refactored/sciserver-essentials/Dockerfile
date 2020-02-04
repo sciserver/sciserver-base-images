@@ -64,21 +64,23 @@ RUN conda install -y \
 		chest \
 		configobj \
 		dill \
-		dynd-python \
-		grequests \
-		libdynd \
 		redis \
 		redis-py \
 		sphinx_rtd_theme \
 		traceback2 \
 		unittest2 \
+	&& conda install -y -c anaconda \
+		libdynd \
+		dynd-python \
+	&& conda install -y -c conda-forge \
+		grequests \
 	&& conda clean -y --all
 
 RUN git clone https://github.com/sciserver/SciScript-Python.git \
 	&& touch /home/idies/keystone.token \
 	&& (cd /home/idies/SciScript-Python \
 	&&     git checkout sciserver-v2.0.13 \
-	&&	   python setup.py install) \
+	&&     cd py3 && python setup.py install) \
 	&& rm /home/idies/keystone.token
 
 
@@ -87,7 +89,7 @@ RUN git clone https://github.com/sciserver/SciScript-Python.git \
 RUN Rscript -e "install.packages(c('bit64', 'jpeg', 'httr', 'jsonlite', 'data.table'), repos='https://cloud.r-project.org/')"
 
 RUN git clone https://github.com/sciserver/SciScript-R.git \
-	&& touch /home/idies/keystone.token && \
+	&& touch /home/idies/keystone.token \
 	&& (cd /home/idies/SciScript-R \
 	&&     git checkout sciserver-v2.0.13 \
 	&&     cd .. \
