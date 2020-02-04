@@ -60,29 +60,29 @@ RUN Rscript -e "install.packages(c('Cairo', 'IRkernel'), repos='https://cloud.r-
 # SciScript Python
 
 RUN conda install -n py37 -y \
-                argcomplete \
-                chest \
-                configobj \
-                dill \
-                redis \
-                redis-py \
-                sphinx_rtd_theme \
-                traceback2 \
-                unittest2 \
-        && conda install -n py37 -y -c anaconda \
-                libdynd \
-                dynd-python \
-        && conda install -n py37 -y -c conda-forge \
-                grequests \
-        && conda clean -y --all
+		argcomplete \
+		chest \
+		configobj \
+		dill \
+		redis \
+		redis-py \
+		sphinx_rtd_theme \
+		traceback2 \
+		unittest2 \
+	&& conda install -n py37 -y -c anaconda \
+		libdynd \
+		dynd-python \
+	&& conda install -n py37 -y -c conda-forge \
+		grequests \
+	&& conda clean -y --all
 
 RUN git clone https://github.com/sciserver/SciScript-Python.git \
-        && touch /home/idies/keystone.token \
-        && cd /home/idies/SciScript-Python \
-        && git checkout sciserver-v2.0.13 \
-        && cd py3 \
-        && (source activate py37 && python setup.py install) \
-        && rm /home/idies/keystone.token
+	&& touch /home/idies/keystone.token \
+	&& cd /home/idies/SciScript-Python \
+	&& git checkout sciserver-v2.0.13 \
+	&& cd py3 \
+	&& (source activate py37 && python setup.py install) \
+	&& rm /home/idies/keystone.token
 
 
 # SciScript R
@@ -90,11 +90,11 @@ RUN git clone https://github.com/sciserver/SciScript-Python.git \
 RUN Rscript -e "install.packages(c('bit64', 'jpeg', 'httr', 'jsonlite', 'data.table'), repos='https://cloud.r-project.org/')"
 
 RUN git clone https://github.com/sciserver/SciScript-R.git \
-        && touch /home/idies/keystone.token \
-        && cd /home/idies/SciScript-R \
-        && git checkout sciserver-v2.0.13 \
-        && cd .. \
-        && R CMD build SciScript-R \
-        && R CMD INSTALL SciServer*.tar.gz \
-        && rm -rf /home/idies/SciServer*.tar.gz \
-        && rm /home/idies/keystone.token
+	&& touch /home/idies/keystone.token \
+	&& cd /home/idies/SciScript-R \
+	&& git checkout sciserver-v2.0.13 \
+	&& cd .. \
+	&& R CMD build SciScript-R \
+	&& R CMD INSTALL SciServer*.tar.gz \
+	&& rm -rf /home/idies/SciServer*.tar.gz \
+	&& rm /home/idies/keystone.token
