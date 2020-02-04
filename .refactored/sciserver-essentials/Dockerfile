@@ -98,3 +98,9 @@ RUN git clone https://github.com/sciserver/SciScript-R.git \
 	&& R CMD INSTALL SciServer*.tar.gz \
 	&& rm -rf /home/idies/SciServer*.tar.gz \
 	&& rm /home/idies/keystone.token
+
+
+# Tensorflow & PyTorch
+
+RUN conda install -n py37 -y tensorflow==2.0.0
+RUN conda install -n py37 -y pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0 -c pytorch
