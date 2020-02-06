@@ -103,3 +103,10 @@ RUN conda install -n py37 -y tensorflow==2.0.0 \
 	&& conda install -n py37 -y -c pytorch pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0 \
 	&& conda clean -y --all
 
+
+# Link to JupyterLab
+
+COPY --chown=idies lab_extension /home/idies/lab_extension
+
+RUN jupyter nbextension install /home/idies/lab_extension --user \
+	&& jupyter nbextension enable lab_extension/main --user --section='common'
