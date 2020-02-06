@@ -69,9 +69,6 @@ RUN conda install -n py37 -y \
 		sphinx_rtd_theme \
 		traceback2 \
 		unittest2 \
-	&& conda install -n py37 -y -c anaconda \
-		libdynd \
-		dynd-python \
 	&& conda install -n py37 -y -c conda-forge \
 		grequests \
 	&& conda clean -y --all
@@ -102,5 +99,5 @@ RUN git clone https://github.com/sciserver/SciScript-R.git \
 
 # Tensorflow & PyTorch
 
-RUN conda install -n py37 -y tensorflow==2.0.0
-RUN conda install -n py37 -y pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0 -c pytorch
+RUN conda install -n py37 -y -c conda-forge keras==2.3.1
+RUN conda install -n py37 -y -c pytorch pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0
