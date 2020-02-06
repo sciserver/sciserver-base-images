@@ -97,7 +97,7 @@ RUN git clone https://github.com/sciserver/SciScript-R.git \
 	&& rm /home/idies/keystone.token
 
 
-# Tensorflow & PyTorch
+RUN conda install -n py37 -y tensorflow==2.0.0 \
+	&& conda install -n py37 -y -c pytorch pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0 \
+	&& conda clean -y --all
 
-RUN conda install -n py37 -y -c conda-forge keras==2.3.1
-RUN conda install -n py37 -y -c pytorch pytorch==1.4.0 torchvision==0.5.0 cpuonly==1.0
