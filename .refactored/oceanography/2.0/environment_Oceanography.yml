@@ -1,0 +1,33 @@
+name: Oceanography
+channels:
+  - conda-forge
+dependencies:
+  - python=3.7
+  - dask
+  - distributed
+  - bottleneck
+  - netCDF4
+  - xarray
+  - cartopy
+  - esmpy
+  - intake-xarray
+  - geopy
+  - xesmf
+  - esmf
+  - xgcm
+  - Ipython
+  - tqdm
+  - pytest
+  - ffmpeg
+  - xmitgcm
+  - eofs
+  - cmocean
+  - gsw
+  - pycwt
+  - seaborn
+  - xhistogram
+  - nc-time-axis
+  - pip
+  - pip:
+    - numbagg
+    - git+https://github.com/hainegroup/oceanspy.git 
