@@ -121,34 +121,34 @@ RUN ipython profile create \
 # Mamba (fast package manager)
 
 RUN conda install -y -c conda-forge mamba \
-		&& conda clean -y --all
+	&& conda clean -y --all
 
 
 # Plotly
 
 RUN mamba install -y -c conda-forge plotly \
-		&& mamba install -n py38 -y -c conda-forge plotly \
-		&& conda clean -y --all
+	&& mamba install -n py38 -y -c conda-forge plotly \
+	&& conda clean -y --all
 
 
 # Geo
 
 RUN mamba install -n py38 -y -c conda-forge \
-				geopy \
-				osmnx \
-				geoplot \
-				geopandas \
-				cartopy \
-				descartes \
-				geos \
-				libspatialindex \
-				pysal \
-				rtree \
-				dash \
-		&& (source activate py38 && pip install --no-cache-dir \
-				GeobricksProj4ToEPSG \
-				jsonpath-rw-ext \
-				census \
-				us \
-				censusgeocode) \
-		&& conda clean -y --all
+		geopy \
+		osmnx \
+		geoplot \
+		geopandas \
+		cartopy \
+		descartes \
+		geos \
+		libspatialindex \
+		pysal \
+		rtree \
+		dash \
+	&& (source activate py38 && pip install --no-cache-dir \
+		GeobricksProj4ToEPSG \
+		jsonpath-rw-ext \
+		census \
+		us \
+		censusgeocode) \
+	&& conda clean -y --all
