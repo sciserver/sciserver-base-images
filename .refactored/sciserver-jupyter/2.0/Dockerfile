@@ -16,6 +16,6 @@ ENV PATH /home/idies/miniconda3/bin:$PATH
 
 RUN conda update -y conda \
 	&& conda update -y --all \
-	&& conda install -y -c conda-forge jupyter==1.0.0 jupyterlab==2.1.2 \
+	&& conda install -y -c conda-forge jupyter==1.0.0 jupyterlab==2.2.6 \
 	&& conda clean -y --all \
 	&& jupyter kernelspec remove -f python3
