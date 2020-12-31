@@ -97,10 +97,15 @@ RUN git clone https://github.com/sciserver/SciScript-R.git \
 	&& rm /home/idies/keystone.token
 
 
-# Tensorflow & PyTorch
+# Mamba (fast package manager)
 
-RUN conda install -n py38 -y tensorflow==2.2.0 \
-	&& conda install -n py38 -y -c pytorch pytorch==1.7.1 torchvision==0.8.2 cpuonly==1.0 \
+RUN conda install -y -c conda-forge mamba \
+        && conda clean -y --all
+
+
+# Tensorflow
+
+RUN mamba install -n py38 -y tensorflow==2.3.0 \
 	&& conda clean -y --all
 
 
@@ -118,12 +123,6 @@ RUN ipython profile create \
 	&& printf "\nc.InteractiveShellApp.matplotlib = 'inline'\n" >> /home/idies/.ipython/profile_default/ipython_kernel_config.py
 
 
-# Mamba (fast package manager)
-
-RUN conda install -y -c conda-forge mamba \
-	&& conda clean -y --all
-
-
 # Plotly
 
 RUN mamba install -y -c conda-forge plotly \
@@ -137,18 +136,30 @@ RUN mamba install -n py38 -y -c conda-forge \
 		geopy \
 		osmnx \
 		geoplot \
-		geopandas \
 		cartopy \
+		pyepsg \
 		descartes \
 		geos \
 		libspatialindex \
+		libiconv \
+		geopandas \
 		pysal \
 		rtree \
-		dash \
 	&& (source activate py38 && pip install --no-cache-dir \
 		GeobricksProj4ToEPSG \
 		jsonpath-rw-ext \
 		census \
 		us \
 		censusgeocode) \
+	&& conda clean -y --all
+
+USER root
+RUN yum -y install libnsl.so.1 && ln -s /usr/lib64/libnsl.so.2 /usr/lib64/libnsl.so.1
+USER idies
+
+
+# PyTorch
+
+RUN source activate py38 && pip install --no-cache-dir torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
+RUN mamba install -n py38 -y -c conda-forge libuv ninja \
 	&& conda clean -y --all
