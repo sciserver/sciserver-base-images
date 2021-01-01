@@ -163,3 +163,32 @@ USER idies
 RUN source activate py38 && pip install --no-cache-dir torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 RUN mamba install -n py38 -y -c conda-forge libuv ninja \
 	&& conda clean -y --all
+
+
+# NodeJS
+
+USER root
+RUN yum -y install nodejs
+USER idies
+
+
+RUN jupyter labextension install jupyterlab-plotly@4.14.1 \
+	&& jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.1 \
+	&& jupyter lab clean \
+	&& jlpm cache clean
+
+
+# ipyleaflet
+
+RUN mamba install -y -c conda-forge ipyleaflet \
+	&& mamba install -n py38 -y -c conda-forge ipyleaflet \
+	&& conda clean -y --all
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-leaflet \
+	&& jupyter lab clean \
+	&& jlpm cache clean
+
+
+# Latest numpy and scipy
+
+RUN mamba install -n py38 -y -c conda-forge numpy==1.19.4 scipy==1.6.0 \
+	&& conda clean -y --all
