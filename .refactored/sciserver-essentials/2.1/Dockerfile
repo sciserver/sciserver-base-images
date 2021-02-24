@@ -21,3 +21,8 @@ RUN jupyter labextension install jupyterlab-plotly@4.14.3 \
 		&& jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-leaflet \
 		&& jupyter lab clean \
 		&& jlpm cache clean
+
+RUN source activate py38 \
+		&& cd SciScript-Python \
+		&& git fetch \
+		&& python Install.py sciserver-v2.1.0
