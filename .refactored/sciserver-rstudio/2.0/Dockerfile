@@ -120,3 +120,5 @@ USER root
 #fix bug in the rstudio release
 RUN chgrp -R idies /var/lib/rstudio-server/
 RUN chmod -R g+rw /var/lib/rstudio-server/
+
+RUN chmod +x /opt/startup.sh
