@@ -17,7 +17,9 @@ RUN yum -y install \
                 libtiff-devel \
                 libjpeg-devel \
                 cairo-devel \
-                libXt-devel
+                libXt-devel \
+                udunits2-devel \
+                htop
 
 RUN yum config-manager --set-enabled powertools
 RUN yum -y install \
@@ -33,6 +35,8 @@ RUN wget -nv https://download2.rstudio.org/server/centos8/x86_64/rstudio-server-
         && yum clean all \
         && rm -rf /var/cache/yum
 
+#fix bug in the rstudio release
+RUN chgrp -R idies /var/lib/rstudio-server && chmod -R g+rw /var/lib/rstudio-server/
 
 ENV PATH /home/idies/R/bin:$PATH
 
@@ -52,9 +56,6 @@ RUN cd ~ \
 
 RUN Rscript -e "install.packages(c('Cairo'), repos='https://cloud.r-project.org/')"
 
-RUN /bin/bash -c $'printf "options(bitmapType=\'cairo\')\n" >> ~/.Rprofile'
-
-
 RUN mkdir -p ~/.rstudio/monitored/user-settings \
         && echo 'initialWorkingDirectory=~/workspace' > ~/.rstudio/monitored/user-settings/user-settings
 
@@ -66,18 +67,13 @@ COPY rserver.conf /etc/rstudio/rserver.conf
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY entrypoint.sh /etc/entrypoint.sh
-
 COPY --chown=idies Rprofile /home/idies/.Rprofile
-
-## Disabled for compatibility with SciServer
-# ENTRYPOINT /etc/entrypoint.sh
 
 EXPOSE 8888
 
+COPY startup.sh /opt/startup.sh
 
-## Added for compatibility with SciServer
-COPY entrypoint.sh /opt/startup.sh
+RUN chmod +x /opt/startup.sh
 
 RUN yum -y install libxml2-devel
 
@@ -102,8 +98,6 @@ RUN git clone https://github.com/sciserver/SciScript-R.git \
         && rm -rf /home/idies/SciServer*.tar.gz \
         && rm /home/idies/keystone.token
 
-
-
 RUN curl -L https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh -o miniconda.sh \
         && bash miniconda.sh -b \
         && rm -f miniconda.sh
@@ -114,11 +108,4 @@ RUN conda update -y conda \
         && conda update -y --all \
         && conda clean -y --all
 
-
 USER root
-
-#fix bug in the rstudio release
-RUN chgrp -R idies /var/lib/rstudio-server/
-RUN chmod -R g+rw /var/lib/rstudio-server/
-
-RUN chmod +x /opt/startup.sh
