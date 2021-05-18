@@ -33,5 +33,5 @@ USER root
 # make stratup file only executable and readable by group
 COPY startup.sh /opt/startup.sh
 RUN chgrp idies /opt/startup.sh && chmod 0755 /opt/startup.sh
-RUN yum install -y htop
+RUN yum install -y htop && yum clean all && rm -rf /var/cache/yum
 USER idies
