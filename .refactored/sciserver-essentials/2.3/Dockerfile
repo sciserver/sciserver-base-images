@@ -24,14 +24,15 @@ RUN pip install --no-cache \
         lckr-jupyterlab-variableinspector \
         jupyterlab-system-monitor \
         jupyterlab-cell-flash \
-        jupyterlab-tabular-data-editor \
-        networkx \
-        dash-vtk
+        jupyterlab-tabular-data-editor
 
 USER root
-# update cpu entry in startup.sh for jupyterlab-system-monitor
-# make stratup file only executable and readable by group
+
+# update cpu entry in startup.sh for jupyterlab-system-monitor; make startup file only executable and readable by group
 COPY startup.sh /opt/startup.sh
+
 RUN chgrp idies /opt/startup.sh && chmod 0755 /opt/startup.sh
+
 RUN yum install -y htop && yum clean all && rm -rf /var/cache/yum
+
 USER idies
