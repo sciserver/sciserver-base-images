@@ -30,8 +30,7 @@ ENV DISPLAY=:0 \
 ADD https://github.com/novnc/noVNC/archive/v${NO_VNC_VER}.zip /_install
 ADD https://github.com/novnc/websockify/archive/v${WEB_SOCK_VER}.zip /_install
 RUN cd /_install && \
-    apt install -y unzip nginx python3 && \
-    ln -s /usr/bin/python3 /usr/bin/python && \
+    apt install -y unzip nginx && \
     unzip v${NO_VNC_VER}.zip && \
     unzip v${WEB_SOCK_VER}.zip && \
     mv noVNC-${NO_VNC_VER} /novnc && \
@@ -79,6 +78,7 @@ RUN cd $HOME \
     && bash Miniconda-install.sh -b \
     && rm Miniconda-install.sh
 ENV PATH /home/idies/miniconda3/bin:$PATH
+RUN conda install -y numpy
 USER root
 
 
