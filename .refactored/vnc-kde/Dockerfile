@@ -86,3 +86,5 @@ USER root
 RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
 
 EXPOSE 8888
+
+RUN sed -i 's/^Exec=konsole/Exec=konsole --workdir ~ -e bash/g' /usr/share/applications/org.kde.konsole.desktop
