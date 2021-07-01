@@ -88,3 +88,8 @@ RUN strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so
 EXPOSE 8888
 
 RUN sed -i 's/^Exec=konsole/Exec=konsole --workdir ~ -e bash/g' /usr/share/applications/org.kde.konsole.desktop
+
+COPY --chown=idies:idies mozilla.zip /home/idies/mozilla.zip
+USER idies
+RUN cd ~ && unzip mozilla.zip && rm -f mozilla.zip
+USER root
