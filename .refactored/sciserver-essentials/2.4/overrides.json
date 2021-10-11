@@ -1,0 +1,36 @@
+{ 
+  "@jupyterlab/notebook-extension:tracker": {"recordTiming": true},
+  "jupyterlab-cell-flash:plugin" : { "color": "rgba(0, 141, 255, 0.2)"},
+  "@gavincyi/jupyterlab-executor:executor":{
+    "executors": [
+        {
+            "name": "bash",
+            "command": "bash /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "python",
+            "command": "python /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "R",
+            "command": "Rscript /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "sh",
+            "command": "sh /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "csh",
+            "command": "csh /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "tcsh",
+            "command": "tcsh /home/idies/workspace/{path} {args}"
+        },
+        {
+            "name": "nbconvert",
+            "command": "jupyter nbconvert --execute /home/idies/workspace/{path} --to notebook {args}"
+        }
+    ]
+  }
+}
