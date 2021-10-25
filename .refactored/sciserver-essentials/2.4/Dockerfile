@@ -6,7 +6,7 @@ RUN source activate py38 && python -m pip install --no-cache --upgrade pip
 
 # Update jupyterlab and ipykernel that supports debugging
 
-RUN pip install --no-cache jupyterlab==3.1.14
+RUN pip install --no-cache jupyterlab==3.2.1
 
 RUN source activate py38 \
 	&& pip install --upgrade --no-cache ipykernel \
@@ -100,7 +100,6 @@ RUN pip install --no-cache \
 	hdf5plugin
 
 RUN jupyter labextension install \
-	jupyterlab-spreadsheet  \
 	@jupyterlab/hdf5 \
 	&& jupyter lab clean \
 	&& jlpm cache clean

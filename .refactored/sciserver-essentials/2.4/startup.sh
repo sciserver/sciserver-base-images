@@ -12,5 +12,5 @@ jupyter lab \
 	--NotebookApp.quit_button=False \
 	--NotebookApp.base_url=$1 \
 	--ResourceUseDisplay.track_cpu_percent=True \
-	--HdfConfig.resolve_links=True 
-
+	--HdfConfig.resolve_links=True \
+	--ContentsManager.allow_hidden=True
