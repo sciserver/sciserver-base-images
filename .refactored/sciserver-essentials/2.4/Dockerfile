@@ -107,7 +107,8 @@ RUN jupyter labextension install \
 RUN source activate py38 && pip install --no-cache papermill[all]
 
 # for python-lsp-server:
-COPY ipython_config.json ~/.ipython/profile_default/ipython_config.json
+RUN sed -i 's/# c.Completer.use_jedi = True/c.Completer.use_jedi = False/g' ~/.ipython/profile_default/ipython_config.py
+
 # for jupyterlab-cell-flash, jupyterlab_execute_time and jupyterlab-executor:
 COPY overrides.json /home/idies/miniconda3/share/jupyter/lab/settings/overrides.json
 
